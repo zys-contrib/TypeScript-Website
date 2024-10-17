@@ -2,7 +2,6 @@ import * as React from "react"
 import { useEffect } from "react"
 
 import "./SiteFooter.scss"
-import { PlaygroundSamples } from "./SiteFooter-PlaygroundSamples"
 import { createIntlLink } from "../IntlLink"
 import { whenEscape } from "../../lib/whenEscape"
 import { Customize } from "./SiteFooter-Customize"
@@ -216,13 +215,6 @@ const faviconForURL = (url: string) => {
 }
 
 export const SiteFooter = (props: Props) => {
-  const normalLinks = useTypeScriptLinks.filter(
-    l => !l.url.includes("#show-examples")
-  )
-  const playgroundExamples = useTypeScriptLinks.find(l =>
-    l.url.includes("#show-examples")
-  )!
-
   const Link = createIntlLink(props.lang)
 
   useEffect(() => {
@@ -303,6 +295,7 @@ export const SiteFooter = (props: Props) => {
             >
             { lang === "ko" ? "개인정보처리방침 및 위치정보이용약관" : "Privacy"}
             </a>
+            <a href="https://go.microsoft.com/fwlink/?LinkID=206977">Terms of Use</a>
             {lang === "fr" ?
               <a
                 lang="fr"
@@ -318,25 +311,11 @@ export const SiteFooter = (props: Props) => {
         <article id="using-typescript">
           <h3>Using TypeScript</h3>
           <ul>
-            {normalLinks.map(page => (
+            {useTypeScriptLinks.map(page => (
               <li key={page.url}>
                 <Link to={page.url}>{page.title}</Link>
               </li>
             ))}
-            <li key="last" id="popover-trigger" className="popover-container">
-              <a
-                href={playgroundExamples.url}
-                aria-haspopup="true"
-                id="popover-trigger-anchor"
-              >
-                <span
-                  style={{ display: "none" }}
-                  className="link-prefix footer-icon"
-                ></span>
-                {playgroundExamples.title}
-              </a>
-              <PlaygroundSamples lang="en" />
-            </li>
           </ul>
         </article>
 
